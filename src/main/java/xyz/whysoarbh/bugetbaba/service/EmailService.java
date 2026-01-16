@@ -57,12 +57,19 @@ public class EmailService
     private void postEmail(Map<String, Object> payload, String errorMessage) {
         try {
             System.out.println("Attempting to send email via Brevo API to: " + ((List)payload.get("to")).get(0));
+            System.out.println("API Key configured: " + (brevoApiKey != null && !brevoApiKey.isEmpty()));
+            
+            if (brevoApiKey == null || brevoApiKey.isEmpty()) {
+                System.out.println("ERROR: BREVO_API_KEY environment variable is not set");
+                return;
+            }
             
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.set("api-key", brevoApiKey);
             headers.set("Accept", "application/json");
 
+            System.out.println("Sending to: " + brevoApiUrl);
             HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
             ResponseEntity<String> response = restTemplate.postForEntity(brevoApiUrl, request, String.class);
             
