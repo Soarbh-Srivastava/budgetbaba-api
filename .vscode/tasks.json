@@ -39,6 +39,18 @@
 			],
 			"isBackground": false,
 			"group": "build"
+		},
+		{
+			"label": "rebuild",
+			"type": "shell",
+			"command": "mvn",
+			"args": [
+				"clean",
+				"package",
+				"-DskipTests"
+			],
+			"isBackground": false,
+			"group": "build"
 		}
 	]
 }

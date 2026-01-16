@@ -24,16 +24,20 @@ public class EmailService
     {
         try
         {
+            System.out.println("Attempting to send email to: " + to);
+            System.out.println("From: " + fromEmail);
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(fromEmail);
             message.setTo(to);
             message.setSubject(subject);
             message.setText(body);
             mailSender.send(message);
+            System.out.println("Email sent successfully to: " + to);
         }
         catch (Exception e)
         {
-            System.out.println("Warning: Failed to send email: " + e.getMessage());
+            System.out.println("ERROR: Failed to send email to " + to + ": " + e.getMessage());
+            e.printStackTrace();
             // Don't throw - allow app to continue without email
         }
     }
